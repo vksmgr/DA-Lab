@@ -109,20 +109,51 @@ print(b)
 
 
 
+#Combing data with overlapping
+
+series_1 = pd.Series(np.arange(10))
+series_2 = pd.Series(np.random.randn(10))
+series_1[3] = np.nan
+series_2[5] = np.nan
+print(series_1)
+print(series_2)
+
+# combinig with overlapping
+
+#print(pd.merge(series_2, series_1))
+
+print(np.where(pd.isnull(series_1), series_2, series_1))
 
 
+#combining with dataframes
+
+df1 = pd.DataFrame({'a' : [1., np.nan, 5., np.nan],
+                    'b': [np.nan, 2., np.nan, 6.],
+                    'c': range(2, 18, 4)})
+df2 = pd.DataFrame({'a': [5., 4., np.nan, 3., 7.],
+                    'b': [np.nan, 3., 4., 6., 8.]})
+
+print(df1)
+print(df2)
+
+# ti will not change the value if the both overlapping columns contains the same values
+print(df1.combine_first(df2))
 
 
+# convering data from row to column and column to row's
+print(df2.stack())
+print(data_series.unstack())
+
+# to unstack the data form the series it must be multiindexed
+
+print(data_series.index)
 
 
+data2 = pd.concat([series_1, series_2], keys=['one', 'two'])
 
+print(data2.unstack())
 
-
-
-
-
-
-
+print(data2.unstack().stack(dropna=False))
 
 
 
