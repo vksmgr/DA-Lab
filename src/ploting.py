@@ -4,6 +4,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sb
 
 data = np.arange(10)
 print(data)
@@ -43,7 +44,7 @@ plt.legend('best')
 plt.show()
 
 
-fig, axis = plt.subplots(1,1)
+fig, axis = plt.subplots(1, 1)
 axis.plot(randn(1000).cumsum())
 tickes = axis.set_xticks([0, 250, 500, 750, 1000])
 lables = axis.set_xticklabels(['one', 'two', 'three', 'four', 'five'], rotation=30, fontsize='small')
@@ -61,3 +62,44 @@ props = {
 
 axis.set(**props)
 plt.show()
+
+
+# Adding Legends
+
+fig, axis = plt.subplots(1,1)
+axis.plot(randn(1000).cumsum(), 'k', label='one')
+axis.plot(randn(1000).cumsum(), 'g--', label='two')
+axis.plot(randn(1000).cumsum(), 'r.', label='three')
+axis.legend(loc='best')
+axis.text(20,20,'hello', family='monospace', fontsize=10)       # this will draw a text on specified position
+plt.savefig('../graphs/first_plot.png', dpi=400, bbox_inches='tight')
+plt.show()
+
+# saving file as image
+
+# plotting Series
+s = pd.Series(randn(10).cumsum(), index=np.arange(0,100,10))
+s.plot(use_index= False)
+plt.show()
+
+# ploting Dataframe
+
+df = pd.DataFrame(randn(10,4).cumsum(0), columns=['A', 'B', 'C', 'D'],
+                  index=np.arange(0, 100, 10))
+df.plot()
+plt.savefig('../graphs/second_plot.png', dpi=400, bbox_inches='tight')
+plt.show()
+
+fig, axes = plt.subplots(2, 1)
+data = pd.Series(np.random.randn(16), index=list('asdfghjklqwertyu'))
+data.plot.bar(ax=axes[0], color='k', alpha=0.7)
+data.plot.barh(ax=axes[1], color='k', alpha=0.7)
+plt.show()
+
+# bar graph with dataframes
+fig, axes = plt.subplots(2,1)
+data_frame = pd.DataFrame(np.random.rand(6,4),
+                          index=['one', 'two', 'three', 'four', 'five', 'six'],
+                          columns=pd.Index(['A', 'B', 'C', 'D'], name='Genus'))
+data_frame.plot().bar(ax=axes[0])
+
